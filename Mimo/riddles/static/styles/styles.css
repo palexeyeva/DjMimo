@@ -1,0 +1,169 @@
+.page{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* html {
+    background-color: rgba(0, 0, 0, .1); 
+} */
+body {
+    /* background-color: #FFD2DB; */
+    /* font-family: Roboto, sans-serif; */
+    font-family: Courier New;    
+    /* margin: 3% 2% 0%; */
+    /* color: #37B85C; */
+    /* background-color: rgba(0, 0, 0, .1); */
+    
+}
+
+header {
+    /* font-size: 4vw; */
+    font-size: 30px;
+    text-align: center;
+    /* background-color: #b83751ec; */
+}
+
+.section-content {
+    background-color: rgba(0, 0, 0, .1); 
+    border: solid rgba(0, 0, 0, .15);
+        border-top-width: medium;
+        border-right-width: medium;
+        border-bottom-width: medium;
+        border-left-width: medium;
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    padding: 0% 2%; 
+}
+
+
+
+.section-inputNumber {
+    padding-top: 2%;
+    display: flex;
+}
+
+.inputNumber {
+    display: flex;
+    text-align: center;
+}
+
+.num {
+    width: 9.3vw;
+    margin-right: 50px;
+}
+
+#cellCount, #iterCount {
+    width: 9.3vw;
+}
+
+/* .inputNumber__cellCount {
+    margin-right: 50px;
+} */
+
+h1 {
+    font-weight: 600;
+}
+
+p {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.btn {
+    /* font-family: Courier New;   */
+    font-weight: 600;
+
+    /* padding: 3px 25px; */
+    /* text-align:  center; */
+    /* text-decoration: none; */
+    /* display: inline-block; */
+    font-size: 1.3em;
+    /* margin: 4px 2px; */
+    /* cursor: pointer; */
+    /* border-radius: 25px;  */
+    height: 40px;
+  }
+
+.section-inputNumber__button{
+    display: flex;
+    align-items: end;
+}
+.section__inputData-fields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* margin-bottom: 1vw; */
+}
+
+.section__inputData {
+    margin: 2vw auto;
+}
+
+.field {
+    margin-right: 1%;
+    margin-bottom: 2%;
+    min-width: 13%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.field p {
+    width: 13%;
+}
+.field:first-child {
+    /* width: 15%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.field:last-child {
+    margin-right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 20%;
+}
+
+.inputData__initial {
+    width: 15%;
+}
+
+.input-field {
+    width: 4vw;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+}
+
+#rowName {
+    font-size: 1.3em;
+}
+
+.section-inputData__button {
+    align-items: end;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-graph {
+    height: 70vh;
+}
+
+svg {
+    width: 80%;
+    height: 80%;
+}
+
+/* .graph-outPut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
