@@ -142,9 +142,13 @@ function validateForm(input)
 
 //
 function showGraph() {
-  if (count == 1) {
-    document.getElementById("output").style.display = "flex";
-  }
+//  $.ajaxSubmit({
+//   type: "POST", 
+//   success: function() {    
+//     console.log("success")
+//   }
+//  })
+ return false;
 }
 
 

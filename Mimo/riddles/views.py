@@ -257,7 +257,7 @@ def index(request):
     imgdata.seek(0)
 
     encoded = base64.b64encode(imgdata.getvalue())
-    data = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
+    data = '<img id="graph" src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
     
     # def fig_to_base64(fig)
     #     img = io.BytesIO()
@@ -274,4 +274,8 @@ def index(request):
         'data': data
     }  
     return render(request, 'index.html', context)
+    # return data
+
+def fields(request):
+    return render(request, "fields.html")
 
