@@ -1,4 +1,9 @@
 count = 0;
+
+// function checkInp(tabName) {
+//   if () {}
+// }
+
 /* Функция открытия окна ввода данных*/
 function openTab(tabName) {
   var elem
@@ -26,6 +31,7 @@ function generateMatrix() {
       var input = document.createElement("input");
       input.id = input.name = "m_" + i + "_" + j;
       input.size = "5";
+      input.required = true;
       tbl.tBodies[0].rows[i].insertCell(-1).appendChild(input);
     }
   }
@@ -50,6 +56,7 @@ function getVect() {
       var input = document.createElement("input");
       input.id = input.name = "st_" + i + "_" + j;
       input.size = "5";
+      input.required = true;
       fiel.tBodies[0].rows[i].insertCell(-1).appendChild(input);
     }
   }
@@ -63,7 +70,8 @@ function getTh() {
   box.id = "th-div"
   for (var i = 0; i < cell; i++) {
     var fiel = document.createElement("input");
-    fiel.name = "th_" + i; 
+    fiel.name = "th_" + i;
+    fiel.required = true; 
     box.appendChild(fiel);
      
   }
@@ -80,6 +88,7 @@ function getMem() {
   for (var i = 0; i < cell; i++) {
     var fiel = document.createElement("input");
     fiel.name = "mem_" + i;
+    fiel.required = true; 
     box.appendChild(fiel);  
   }
   box.className = "input-field"
@@ -94,6 +103,7 @@ function getDisc() {
   for (var i = 0; i < cell; i++) {
     var fiel = document.createElement("input");
     fiel.name = "disc_" + i;
+    fiel.required = true; 
     box.appendChild(fiel);  
   }
   box.className = "input-field"
@@ -108,6 +118,7 @@ function getInit() {
   for (var i = 0; i < cell; i++) {
     var fiel = document.createElement("input");
     fiel.name = "init_" + i;
+    fiel.required = true; 
     box.appendChild(fiel);  
   }
   box.className = "input-field"
@@ -134,6 +145,16 @@ function showGraph() {
   if (count == 1) {
     document.getElementById("output").style.display = "flex";
   }
-
-  document.getElementById("output").style.display = "flex";
 }
+
+
+function downloadData() {
+  var doc = new jsPDF();
+  var imgData = document.getElementsByTagName('img');
+  var PNGtoUrl = imgData[0].src;
+  doc.text(20, 20, "Network behavior");
+  doc.addImage(PNGtoUrl, 'png', 20, 30, 160, 150);
+  doc.save('protocol.pdf');
+}
+
+

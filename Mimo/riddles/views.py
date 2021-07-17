@@ -15,6 +15,7 @@ import matplotlib.gridspec as gridspec
 import io
 from io import *
 from matplotlib.backends.backend_agg import FigureCanvasAgg
+import base64
 
 
 
@@ -81,19 +82,17 @@ def index(request):
         curMem1 = list()
         curMem2 = list()
         for i in range(n):
-            b = np.ones((memory[i], 2)) #исправить
-            c = np.ones((memory[i], 2)) #исправить
+            b = np.ones((memory[i], 2)) 
+            c = np.ones((memory[i], 2)) 
             curMem1.append(b)
             curMem2.append(c)
         for i in range(n):
-            for j in range(memory[i]): #исправить
+            for j in range(memory[i]): 
                 for k in range(int(2)):
                     curMem1[i][j][k] = curMem1[i][j][k]*0
                     curMem2[i][j][k] = curMem2[i][j][k]*0
         print('Состояние сети для t = 0:', initial)
         while fl == 1:
-            # print('Введите количество тактов (кол-во итераций):')
-            # iter = int(input()) #исправить
             step = 0
             while step < iter:
                 e = [0, 0]
@@ -103,9 +102,10 @@ def index(request):
                     flag = 0
                     for i in range(n):
                         if initial[i] == 1:
-                            e[0] = e[0] + p[j][0] * R[i][j] #исправить
+                            e[0] = e[0] + p[j][0] * R[i][j] 
                         elif initial[i] == 2:
-                            e[1] = e[1] + p[j][1] * R[i][j] #исправить
+                            e[1] = e[1] + p[j][1] * R[i][j]
+                        s = e[0] + e[1] #new
                     for i in range(memory[j]):
                         curMem1[j][i][0] = curMem1[j][i][1]
                         curMem2[j][i][0] = curMem2[j][i][1]
@@ -113,7 +113,7 @@ def index(request):
                     curMem2[j][0][1] = curMem2[j][0][1] * 0
                     curMem1[j][0][1] += e[0]
                     curMem2[j][0][1] += e[1]
-                    for i in range(memory[j]): #fix
+                    for i in range(memory[j]): 
                         if i + 2 <= memory[j] and memory[j] != 1:
                             curMem1[j][i + 1][1] = curMem1[j][i][0] * discount[j]
                             curMem2[j][i + 1][1] = curMem2[j][i][0] * discount[j]
@@ -124,13 +124,13 @@ def index(request):
                         for i in range(memory[j]):
                             sum1 += curMem1[j][i][1]
                             sum2 += curMem2[j][i][1]
-                    if sum1 > sum2 and sum1 >= Th[j]:
+                    if sum1+sum2 >= Th[j] and sum1 > sum2:
                         state[j] = 1
                         flag = 1
-                    elif sum2 > sum1 and sum2 >= Th[j]:
+                    elif sum1+sum2 >=Th[j] and sum2 > sum1:
                         state[j] = 2
                         flag = 1
-                    elif sum1 == sum2 and sum1 >= Th[j]:
+                    elif sum1+sum2 >= Th[j] and sum1 == sum2:
                         if p[j][0] > p[j][1]:
                             state[j] = 1
                             flag = 1
@@ -139,8 +139,25 @@ def index(request):
                             flag = 1
                         elif p[j][0] == p[j][1]:
                             state[j] = ran.randint(1, 2)
-                    elif (e[0] == e[1] and e[0] == 0) or (e[0] < Th[j] and e[1] < Th[j]):
+                    elif (e[0] == e[1] and e[0] == 0) or (e[0]+e[1] < Th[j]):
                         state[j] = 0
+                    # if sum1 > sum2 and sum1 >= Th[j]:
+                    #     state[j] = 1
+                    #     flag = 1
+                    # elif sum2 > sum1 and sum2 >= Th[j]:
+                    #     state[j] = 2
+                    #     flag = 1
+                    # elif sum1 == sum2 and sum1 >= Th[j]:
+                    #     if p[j][0] > p[j][1]:
+                    #         state[j] = 1
+                    #         flag = 1
+                    #     elif p[j][0] < p[j][1]:
+                    #         state[j] = 2
+                    #         flag = 1
+                    #     elif p[j][0] == p[j][1]:
+                    #         state[j] = ran.randint(1, 2)
+                    # elif (e[0] == e[1] and e[0] == 0) or (e[0] < Th[j] and e[1] < Th[j]):
+                    #     state[j] = 0
                     print('Внутреннее состояние агента', j, ': (', sum1, ', ', sum2, ')')
                     inerState[j].append([sum1, sum2])
                     e = [0, 0]
@@ -164,25 +181,18 @@ def index(request):
                     g.append(plotState[j][i])
                 init_new[str(i)] = g.copy()
                 g = []
-            print('test2')
             timePeriod = [f"t{i}" for i in range(t)]
             activeType = ["0", " ", " "]
             nr = int(3 * n)
-            # fig = plt.figure(figsize=(15, 15), constrained_layout = True)
-            # fig = plt.figure(figsize=(15, 15))
             gs = gridspec.GridSpec(ncols = 2, nrows = nr , figure=fig)
-            print('test3')
             tx = {}
             xtick = [i for i in range(t)]
             ytick = [0, 1, 2]
-            color = ['olive','r', 'midnightblue', 'gold', 'chartreuse', 'c']
-            print('test4')
         
             cls = 'Агент №' + str(i)
             width = 0.3
             x = np.arange(t)
             ax = {}
-            print('test6')
             for i in range(n):
                 h1 = list()
                 h2 = list()
@@ -196,7 +206,6 @@ def index(request):
                     elif init_new[str(i)][k] == 2:
                         h1.append(int(0))
                         h2.append(int(1))
-                print('test7')
                 tx[str(i)] = fig.add_subplot(gs[i, :])
                 tx[str(i)].set_xticks(xtick)
                 tx[str(i)].set_yticks(ytick)
@@ -205,7 +214,7 @@ def index(request):
                 tx[str(i)].bar(x, h2, width, label='Активность типа 2') 
                 tx[str(i)].legend(bbox_to_anchor=(1, 0.6))
                 tx[str(i)].set_xticklabels(timePeriod)
-                tx[str(i)].set_title('Внешнее состояние агента №' + str(i))
+                tx[str(i)].set_title('Внешнее состояние агента №' + str(i+1))
         
             for i in range(n):
                 g1 = list()
@@ -224,7 +233,7 @@ def index(request):
                 ax[str(i)].plot(g1, lw = 2, label = 'Активности типа 1', marker = 'o')
                 ax[str(i)].plot(g2, lw = 2, label = 'Активность типа 2', marker = 'o')
                 line = ax[str(i)].plot(x, T, linestyle = '--', color = 'grey', lw = 0.7)
-                ax[str(i)].set_title('Внутреннее состояние агента №'+ str(i))
+                ax[str(i)].set_title('Внутреннее состояние агента №'+ str(i+1))
                 ax[str(i)].set_xticks(x)
                 ax[str(i)].set_xticklabels(timePeriod)
                 ax[str(i)].legend()
@@ -239,10 +248,27 @@ def index(request):
             fl = int(0)
 
 
-    imgdata = StringIO()
-    fig.savefig(imgdata, format='svg')
+    # imgdata = BytesIO()
+    # fig.savefig(imgdata, format='png', bbox_inches='tight')
+    # imgdata.seek(0)
+    # data = imgdata.getvalue()
+    imgdata = BytesIO()
+    fig.savefig(imgdata, format='png', bbox_inches='tight')
     imgdata.seek(0)
-    data = imgdata.getvalue()
+
+    encoded = base64.b64encode(imgdata.getvalue())
+    data = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
+    
+    # def fig_to_base64(fig)
+    #     img = io.BytesIO()
+    #     fig.savefig(img, format='png',
+    #                 bbox_inches='tight')
+    #     img.seek(0)
+
+    #     return base64.b64encode(img.getvalue())
+
+    # encoded = fig_to_base64(fig)
+    # my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
 
     context = {
         'data': data
