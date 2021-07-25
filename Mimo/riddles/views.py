@@ -30,7 +30,8 @@ def index(request):
     st = []
     fig = plt.figure(figsize=(15, 15), constrained_layout = True)
     iter = 0
-    
+    prt = {}
+    p = []
     if request.method == 'POST':
         n = int(request.POST['count'])    
         for i in range(n):
@@ -64,6 +65,13 @@ def index(request):
             'disc': disc,
             'st': st
         }
+
+        prt = {
+            't': [0],
+            'iner': [],
+            'state': [init]
+        }
+
         n = int(n)
         initial = net['init']
         memory = net['mem']
@@ -141,23 +149,6 @@ def index(request):
                             state[j] = ran.randint(1, 2)
                     elif (e[0] == e[1] and e[0] == 0) or (e[0]+e[1] < Th[j]):
                         state[j] = 0
-                    # if sum1 > sum2 and sum1 >= Th[j]:
-                    #     state[j] = 1
-                    #     flag = 1
-                    # elif sum2 > sum1 and sum2 >= Th[j]:
-                    #     state[j] = 2
-                    #     flag = 1
-                    # elif sum1 == sum2 and sum1 >= Th[j]:
-                    #     if p[j][0] > p[j][1]:
-                    #         state[j] = 1
-                    #         flag = 1
-                    #     elif p[j][0] < p[j][1]:
-                    #         state[j] = 2
-                    #         flag = 1
-                    #     elif p[j][0] == p[j][1]:
-                    #         state[j] = ran.randint(1, 2)
-                    # elif (e[0] == e[1] and e[0] == 0) or (e[0] < Th[j] and e[1] < Th[j]):
-                    #     state[j] = 0
                     print('Внутреннее состояние агента', j, ': (', sum1, ', ', sum2, ')')
                     inerState[j].append([sum1, sum2])
                     e = [0, 0]
@@ -171,9 +162,12 @@ def index(request):
                 initial = state.copy()
                 plotState.append(initial)
                 print('-------Внешнее состояние сети для t =', t,':', initial, '-------')
+
+                prt['t'].append(t)
+                prt['state'].append(initial)
+
                 t += 1
                 step += 1
-            print('test1')
             init_new = {}
             g = []
             for i in range(n):
@@ -189,7 +183,7 @@ def index(request):
             xtick = [i for i in range(t)]
             ytick = [0, 1, 2]
         
-            cls = 'Агент №' + str(i)
+            # cls = 'Агент №' + str(i)
             width = 0.3
             x = np.arange(t)
             ax = {}
@@ -237,44 +231,37 @@ def index(request):
                 ax[str(i)].set_xticks(x)
                 ax[str(i)].set_xticklabels(timePeriod)
                 ax[str(i)].legend()
-            print('test')
-            # plt.show()
-            # plt.savefig('my_plot.png') 
-            # canvas = FigureCanvasAgg(fig)
-            # stream = cStringIO.StringIO()
-            # canvas.print_png(stream)
-            # canvas.print_png(fig)
 
+            iSt = []
+            for k in range(int(t)):
+                j = []
+                for i in range(int(n)):
+                    g = inerState[i][k].copy()
+                    j.append(g)
+                iSt.append(j)
+
+
+            prt['iner'].extend(iSt)
+            p = zip(prt['t'], prt['state'], prt['iner'])
+            
             fl = int(0)
 
 
-    # imgdata = BytesIO()
-    # fig.savefig(imgdata, format='png', bbox_inches='tight')
-    # imgdata.seek(0)
-    # data = imgdata.getvalue()
     imgdata = BytesIO()
     fig.savefig(imgdata, format='png', bbox_inches='tight')
     imgdata.seek(0)
 
     encoded = base64.b64encode(imgdata.getvalue())
     data = '<img id="graph" src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
-    
-    # def fig_to_base64(fig)
-    #     img = io.BytesIO()
-    #     fig.savefig(img, format='png',
-    #                 bbox_inches='tight')
-    #     img.seek(0)
 
-    #     return base64.b64encode(img.getvalue())
-
-    # encoded = fig_to_base64(fig)
-    # my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
 
     context = {
-        'data': data
+        'data': data,
+        'prt': p
     }  
+
     return render(request, 'index.html', context)
-    # return data
+
 
 def fields(request):
     return render(request, "fields.html")
