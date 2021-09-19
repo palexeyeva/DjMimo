@@ -93,6 +93,14 @@ p {
     margin: 2vw auto;
 }
 
+.next {
+    margin-right: 30px;
+}
+
+.form-control {
+    margin-bottom: 4px;
+}
+
 .field {
     margin-right: 1%;
     margin-bottom: 2%;
@@ -182,4 +190,21 @@ img {
 }
 .table-prt {
     background: white;
+}
+
+.FileName {
+    height: 40px;
+}
+
+.saveFile {
+    display: flex;    
+}
+
+#btn-saveDB {
+    margin-right: 10px;
+}
+
+#FileName {
+    height: 40px;
+    width: 150px;
 }
