@@ -233,12 +233,12 @@ function readFile(input) {
   reader.readAsText(file);
 
   reader.onload = function() {
-    console.log(reader.result);
+    // console.log(reader.result);
     let res = reader.result;
     let count = res.split(';')[0];
     let iter = res.split(';')[1];
 
-    console.log(count);
+    // console.log(count);
 
     document.getElementById("cellCount").value = count;
     document.getElementById("iterCount").value = iter;
@@ -366,7 +366,7 @@ function saveFile() {
 
 
 
-  console.log(str);
+  // console.log(str);
   var a = document.createElement('a'); 
   a.style.display = "none";
   a.id = 'a';
@@ -461,7 +461,7 @@ function downloadData() {
   doc.addImage(PNGtoUrl, "png", 20, celly, 150, 140);
 
   h = imgData[0].height;
-  console.log(h);
+  // console.log(h);
 
   y+=h;
   var res = doc.autoTableHtmlToJson(document.getElementById("tblID"));

@@ -99,7 +99,7 @@ def index(request):
                 for k in range(int(2)):
                     curMem1[i][j][k] = curMem1[i][j][k]*0
                     curMem2[i][j][k] = curMem2[i][j][k]*0
-        print('Состояние сети для t = 0:', initial)
+        # print('Состояние сети для t = 0:', initial)
         while fl == 1:
             step = 0
             while step < iter:
@@ -149,7 +149,7 @@ def index(request):
                             state[j] = ran.randint(1, 2)
                     elif (e[0] == e[1] and e[0] == 0) or (e[0]+e[1] < Th[j]):
                         state[j] = 0
-                    print('Внутреннее состояние агента', j, ': (', sum1, ', ', sum2, ')')
+                    # print('Внутреннее состояние агента', j, ': (', sum1, ', ', sum2, ')')
                     inerState[j].append([sum1, sum2])
                     e = [0, 0]
                     sum1 = 0
@@ -161,7 +161,7 @@ def index(request):
                                 curMem2[j][i][k] = curMem2[j][i][k] * 0
                 initial = state.copy()
                 plotState.append(initial)
-                print('-------Внешнее состояние сети для t =', t,':', initial, '-------')
+                # print('-------Внешнее состояние сети для t =', t,':', initial, '-------')
 
                 prt['t'].append(t)
                 prt['state'].append(initial)
