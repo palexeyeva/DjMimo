@@ -354,7 +354,7 @@ function saveFile() {
 
 
   for (i=0; i < count; i++) {
-    for (j=0; j<count; j++) {
+    for (j=0; j<2; j++) {
       n = 'st_'+(i+1)+'_'+(j+1);
       str += String(document.getElementById(n).value);
       if (i != (count-1) || j!=(count - 1)) {
